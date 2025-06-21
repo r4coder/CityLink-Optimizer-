@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dijkstra Visualizer</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+  <div id="map"></div>
+
+  <div class="control-panel">
+    <label for="fromNode">From:</label>
+    <select id="fromNode"></select>
+
+    <label for="toNode">To:</label>
+    <select id="toNode"></select>
+
+    <button onclick="connectSelectedNodes()">Add Edge</button>
+
+    <hr>
+
+    <label for="startNode">Start:</label>
+    <select id="startNode"></select>
+
+    <label for="endNode">End:</label>
+    <select id="endNode"></select>
+
+    <button onclick="runDijkstra()">Run Dijkstra</button>
+    <button onclick="resetGraph()">Reset</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
