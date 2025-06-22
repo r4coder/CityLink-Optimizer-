@@ -124,6 +124,13 @@ function runDijkstra() {
     el.style.background = 'yellow';
     el.style.border = '2px solid black';
   });
+
+  const distanceBox = document.getElementById("shortestDistanceDisplay");
+  if (dist[end] !== Infinity) {
+    distanceBox.innerHTML = `Shortest Distance: <span style="color: green">${dist[end].toFixed(2)} km</span>`;
+  } else {
+    distanceBox.innerHTML = `<span style="color: red">No path found!</span>`;
+  }
 }
 
 function resetGraph() {
@@ -134,4 +141,6 @@ function resetGraph() {
   });
   labels.forEach(label => map.removeLayer(label));
   labels = [];
+
+  document.getElementById("shortestDistanceDisplay").innerHTML = '';
 }
