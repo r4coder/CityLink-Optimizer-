@@ -42,7 +42,8 @@ body, html {
   font-size: 14px;
 }
 
-.control-panel select, .control-panel button {
+.control-panel select,
+.control-panel button {
   width: 100%;
   padding: 6px;
   margin-bottom: 8px;
