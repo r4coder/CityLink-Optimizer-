@@ -8,7 +8,7 @@ let edges = [];
 let labels = [];
 let nodeCount = 0;
 
-map.on('click', function(e) {
+map.on('click', function (e) {
   createNode(e.latlng.lat, e.latlng.lng);
 });
 
@@ -46,8 +46,8 @@ function getDistance(p1, p2) {
   const dLat = (p2.lat - p1.lat) * Math.PI / 180;
   const dLng = (p2.lng - p1.lng) * Math.PI / 180;
   const a = Math.sin(dLat / 2) ** 2 +
-            Math.cos(p1.lat * Math.PI / 180) * Math.cos(p2.lat * Math.PI / 180) *
-            Math.sin(dLng / 2) ** 2;
+    Math.cos(p1.lat * Math.PI / 180) * Math.cos(p2.lat * Math.PI / 180) *
+    Math.sin(dLng / 2) ** 2;
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 }
@@ -63,7 +63,10 @@ function connectSelectedNodes() {
   const dist = getDistance(m1.getLatLng(), m2.getLatLng());
 
   const line = L.polyline(latlngs, { color: 'black', weight: 2 }).addTo(map);
+
+  // Undirected graph: add both edges
   edges.push({ from, to, weight: dist });
+  edges.push({ from: to, to: from, weight: dist });
 
   const midLat = (latlngs[0].lat + latlngs[1].lat) / 2;
   const midLng = (latlngs[0].lng + latlngs[1].lng) / 2;
@@ -73,7 +76,7 @@ function connectSelectedNodes() {
       className: '',
       html: `
         <div class='edge-label-box'>
-          <div><strong>${from} &rarr; ${to}</strong></div>
+          <div><strong>${from} &#8596; ${to}</strong></div>
           <div>${dist.toFixed(2)} km</div>
         </div>
       `,
