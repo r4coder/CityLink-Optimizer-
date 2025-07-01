@@ -140,13 +140,47 @@ function runDijkstra() {
 }
 
 function resetGraph() {
+  // Remove polylines (edges)
+  map.eachLayer(layer => {
+    if (layer instanceof L.Polyline && !(layer instanceof L.Marker)) {
+      map.removeLayer(layer);
+    }
+  });
+
+  // Reset node styles
   markers.forEach(m => {
     const el = m.getElement();
-    el.style.background = 'white';
-    el.style.border = '2px solid gray';
+    if (el) {
+      el.style.background = 'white';
+      el.style.border = '2px solid gray';
+    }
   });
+
+  // Remove edge labels
   labels.forEach(label => map.removeLayer(label));
   labels = [];
 
+  // Clear distance + path info
   document.getElementById("shortestDistanceDisplay").innerHTML = '';
+
+  // Clear dropdowns
+  ['fromNode', 'toNode', 'startNode', 'endNode'].forEach(id => {
+    const select = document.getElementById(id);
+    while (select.options.length > 0) {
+      select.remove(0);
+    }
+  });
+
+  // Refill dropdowns from current markers
+  markers.forEach((_, i) => {
+    ['fromNode', 'toNode', 'startNode', 'endNode'].forEach(id => {
+      const opt = document.createElement('option');
+      opt.value = i;
+      opt.text = `${i}`;
+      document.getElementById(id).appendChild(opt);
+    });
+  });
+
+  // Reset edges array
+  edges = [];
 }
