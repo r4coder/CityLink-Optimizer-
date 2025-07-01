@@ -2,11 +2,12 @@
 <html>
 <head>
   <title>Dijkstra Visualizer</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
+
   <div id="map"></div>
 
   <div class="control-panel">
@@ -18,7 +19,7 @@
 
     <button onclick="connectSelectedNodes()">Add Edge</button>
 
-    <hr>
+    <hr />
 
     <label for="startNode">Start:</label>
     <select id="startNode"></select>
@@ -29,7 +30,7 @@
     <button onclick="runDijkstra()">Run Dijkstra</button>
     <button onclick="resetGraph()">Reset</button>
 
-    <div id="shortestDistanceDisplay" style="margin-top: 10px; font-size: 14px; font-weight: bold; color: #333;"></div>
+    <div id="shortestDistanceDisplay"></div>
   </div>
 
   <script src="script.js"></script>
