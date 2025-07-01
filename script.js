@@ -140,14 +140,14 @@ function runDijkstra() {
 }
 
 function resetGraph() {
-  // 1. Remove all edge polylines
+  // Remove all edge polylines (not markers)
   map.eachLayer(layer => {
     if (layer instanceof L.Polyline && !(layer instanceof L.Polygon)) {
       map.removeLayer(layer);
     }
   });
 
-  // 2. Reset node styles
+  // Reset node circle styles
   markers.forEach(m => {
     const el = m.getElement();
     if (el) {
@@ -156,22 +156,21 @@ function resetGraph() {
     }
   });
 
-  // 3. Remove edge labels
+  // Remove edge labels from map
   labels.forEach(label => map.removeLayer(label));
   labels = [];
 
-  // 4. Clear all edge data
+  // Clear edge data
   edges = [];
 
-  // 5. Clear dropdowns
+  // Clear dropdowns and reset selections
   ['fromNode', 'toNode', 'startNode', 'endNode'].forEach(id => {
     const select = document.getElementById(id);
-    while (select.firstChild) {
-      select.removeChild(select.firstChild);
-    }
+    select.innerHTML = '';       // Remove all options
+    select.selectedIndex = -1;   // Clear selection
   });
 
-  // 6. Refill dropdowns from markers
+  // Repopulate dropdowns with existing node IDs
   markers.forEach((_, i) => {
     ['fromNode', 'toNode', 'startNode', 'endNode'].forEach(id => {
       const opt = document.createElement('option');
@@ -181,6 +180,6 @@ function resetGraph() {
     });
   });
 
-  // 7. Clear shortest path result
+  // Clear shortest distance and path display
   document.getElementById("shortestDistanceDisplay").innerHTML = '';
 }
