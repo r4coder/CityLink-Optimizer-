@@ -140,14 +140,14 @@ function runDijkstra() {
 }
 
 function resetGraph() {
-  // Remove polylines (edges)
+  // 1. Remove all edge polylines
   map.eachLayer(layer => {
-    if (layer instanceof L.Polyline && !(layer instanceof L.Marker)) {
+    if (layer instanceof L.Polyline && !(layer instanceof L.Polygon)) {
       map.removeLayer(layer);
     }
   });
 
-  // Reset node styles
+  // 2. Reset node styles
   markers.forEach(m => {
     const el = m.getElement();
     if (el) {
@@ -156,22 +156,22 @@ function resetGraph() {
     }
   });
 
-  // Remove edge labels
+  // 3. Remove edge labels
   labels.forEach(label => map.removeLayer(label));
   labels = [];
 
-  // Clear distance + path info
-  document.getElementById("shortestDistanceDisplay").innerHTML = '';
+  // 4. Clear all edge data
+  edges = [];
 
-  // Clear dropdowns
+  // 5. Clear dropdowns
   ['fromNode', 'toNode', 'startNode', 'endNode'].forEach(id => {
     const select = document.getElementById(id);
-    while (select.options.length > 0) {
-      select.remove(0);
+    while (select.firstChild) {
+      select.removeChild(select.firstChild);
     }
   });
 
-  // Refill dropdowns from current markers
+  // 6. Refill dropdowns from markers
   markers.forEach((_, i) => {
     ['fromNode', 'toNode', 'startNode', 'endNode'].forEach(id => {
       const opt = document.createElement('option');
@@ -181,6 +181,6 @@ function resetGraph() {
     });
   });
 
-  // Reset edges array
-  edges = [];
+  // 7. Clear shortest path result
+  document.getElementById("shortestDistanceDisplay").innerHTML = '';
 }
